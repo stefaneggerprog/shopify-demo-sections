@@ -62,11 +62,11 @@ Designed to showcase products, categories, or editorial content in a fully visua
 
 ## 📱 Mobile
 
-![Mobile Screenshot](./Fotokollektion_Mobile.jpg)
+![Mobile Screenshot](Fotokollektion_Mobile.jpg)
 
 ## 💻 Desktop
 
-![Desktop Screenshot](./Fotokollektion_Desktop.jpg)
+![Desktop Screenshot](Fotokollektion_Desktop.jpg)
 
 ---
 
