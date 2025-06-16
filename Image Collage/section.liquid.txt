@@ -1,0 +1,218 @@
+<style>
+.image-collage-wrapper {
+  text-align: center;
+  padding: 0 10px;
+}
+
+.image-collage-heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.image-collage-grid {
+  display: grid;
+  grid-template-columns: {{ section.settings.horizontalDivisions | default: 'repeat(4, 1fr)' }};
+  grid-template-rows: {{ section.settings.verticalDivisions | default: 'auto auto' }};
+  grid-auto-flow: dense;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.image-collage-tile {
+  position: relative;
+}
+
+.image-collage-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-collage-overlay {
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+  max-width: 80%;
+  max-height: 80%;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  pointer-events: none;
+  hyphens: auto;
+  border: 1px black solid;
+}
+
+.image-collage-overlay h3,
+.image-collage-overlay p {
+  color: black;
+  margin: 0;
+  text-align: left;
+  line-height: 1.4;
+}
+  
+.image-collage-overlay h3{
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 750px) {
+  .image-collage-grid {
+    grid-template-columns: {{ section.settings.horizontalDivisionsMobile | default: 'repeat(2, 1fr)' }};
+    grid-template-rows: {{ section.settings.verticalDivisionsMobile | default: 'auto auto' }};
+  }
+
+  .image-collage-heading {
+    font-size: 1.5rem;
+  }
+
+  .image-collage-overlay h3 {
+    font-size: 1.1rem;
+  }
+
+  .image-collage-overlay p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 751px) {
+  .shopify-section.image-collage {
+    padding-left: {{ section.settings.paddingDesktop }};
+    padding-right: {{ section.settings.paddingDesktop }};
+  }
+}
+</style>
+
+
+<div class="image-collage-wrapper">
+  {% if section.settings.heading != blank %}
+    <h2 class="image-collage-heading">{{ section.settings.heading }}</h2>
+  {% endif %}
+
+  <div class="image-collage-grid">
+    {% for block in section.blocks %}
+      {% assign image = block.settings.image %}
+      <div
+        class="image-collage-tile"
+        style="
+          grid-column: span {{ block.settings.gridWidth }};
+          grid-row: span {{ block.settings.gridHeight }};
+        "
+      >
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}">
+            {{
+              image
+              | image_url: width: 800
+              | image_tag: loading: 'lazy'
+            }}
+          </a>
+        {% else %}
+          {{
+            image
+            | image_url: width: 800
+            | image_tag: loading: 'lazy'
+          }}
+        {% endif %}
+
+        {% if block.settings.heading != blank or block.settings.text != blank %}
+          <div class="image-collage-overlay">
+            {% if block.settings.heading != blank %}
+              <h3>{{ block.settings.heading }}</h3>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <p>{{ block.settings.text }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image Collage Section",
+  "class": "image-collage scroll-trigger animate--slide-in",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading"
+    },
+    {
+      "type": "text",
+      "id": "horizontalDivisions",
+      "label": "Desktop Columns (Width of Element)",
+      "default": "repeat(4, 1fr)"
+    },
+    {
+      "type": "text",
+      "id": "verticalDivisions",
+      "label": "Desktop Rows (Height of Element)",
+      "default": "auto auto auto"
+    },
+    {
+      "type": "text",
+      "id": "horizontalDivisionsMobile",
+      "label": "Mobile Columns (Width of Element)",
+      "default": "repeat(2, 1fr)"
+    },
+    {
+      "type": "text",
+      "id": "verticalDivisionsMobile",
+      "label": "Mobile Rows (Height of Element)",
+      "default": "auto auto"
+    },
+    {
+      "type": "text",
+      "id": "paddingDesktop",
+      "label": "Desktop Side Padding (e.g. 5% or 40px)",
+      "default": "5%"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Optional Link"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading Text"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Subtext"
+        },
+        {
+          "type": "number",
+          "id": "gridWidth",
+          "label": "Columns to span (Width of Element)",
+          "default": 1
+        },
+        {
+          "type": "number",
+          "id": "gridHeight",
+          "label": "Rows to span (Height of Element)",
+          "default": 1
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Collage",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
