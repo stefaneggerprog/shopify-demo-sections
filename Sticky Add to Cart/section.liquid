@@ -1,0 +1,449 @@
+<div id="sticky" class="sticky_hidden">
+  <div id="sticky_container">
+    {% if section.settings.stickyAtcEnableImage %}
+      <div class="sticky_image-container">
+        {% assign image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+        {{ image | image_url: width: 300 | image_tag: loading: "lazy", widths: "150, 300, 450" }}
+      </div>
+    {% endif %}
+
+    <div class="sticky_product-title">{{ product.title }}</div>
+
+    {% if product.has_only_default_variant == false %}
+      <div class="sticky_variant-title">{{ product.selected_or_first_available_variant.title }}</div>
+    {% endif %}
+
+    <div class="sticky_price">
+      <span>{{ product.selected_or_first_available_variant.price | money }}</span>
+      {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+        <span class="sticky_old-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class=" button {% if section.settings.stickyAtcEnableShaking %} btn-shake {% endif %} {% if section.settings.show_dynamic_checkout and product.selling_plan_groups == empty %}button--secondary{% else %}button--primary{% endif %}"
+    aria-label="Add to cart"
+    {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+  >
+    <svg width="16" height="16" viewBox="0 0 448 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg" {% if product.selected_or_first_available_variant.available == false %}style="display:none"{% endif %}>
+      <path d="M352 160v-32C352 57.42 294.579 0 224 0 153.42 0 96 57.42 96 128v32H0v272c0 44.183 35.817 80 80 80h288c44.183 0 80-35.817 80-80V160h-96zm-192-32c0-35.29 28.71-64 64-64s64 28.71 64 64v32H160v-32zm160 120c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zm-192 0c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24z"/>
+    </svg>
+
+    {% if product.selected_or_first_available_variant.available %}
+      <span>{{ 'products.product.add_to_cart' | t }}</span>
+    {% else %}
+      <span>{{ 'products.product.sold_out' | t }}</span>
+    {% endif %}
+  </button>
+
+  {% if section.settings.show_dynamic_checkout %}
+    {{ form | payment_button }}
+  {% endif %}
+</div>
+
+<style>
+  {{ section.settings.stickyFonttype | font_face }}
+
+  #sticky *{
+    font-family: {{section.settings.stickyFonttype.family}}, {{section.settings.stickyFonttype.fallback_families}};
+  }
+
+  #sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 100;
+    padding: 10px 20px;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .sticky_hidden {
+    opacity: 0;
+    transform: translateY(100%);
+    visibility: hidden;
+  }
+
+  #sticky_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  #sticky_container>*{
+    text-align: center;
+  }
+
+  .sticky_image-container {
+    display: flex
+  }
+
+  .sticky_image-container img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .sticky_product-title {
+    font-weight: bold;
+    font-size: {{ section.settings.fontsizeTitle }}px;
+    color: #333;
+    flex: 1;
+  }
+
+  .sticky_variant-title {
+    font-size: {{ section.settings.fontsizeVariant }}px;
+    color: #555;
+    flex: 1;
+  }
+
+  .sticky_price {
+    font-size: {{ section.settings.fontsizePrice }}px;
+    color: #d54d4d;
+    text-align: right;
+    flex: 1;
+  }
+
+  .sticky_old-price {
+    text-decoration: line-through;
+    color: #888;
+    margin-left: 8px;
+  }
+
+  #sticky button {
+    background-color: {{ section.settings.stickyAtcBgColor }};
+    color: {{ section.settings.stickyAtcColor }};
+    font-size: {{ section.settings.fontsizeButton }}px;
+    padding: 12px 20px;
+    width: 100%;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+  }
+
+  #sticky button svg {
+    height: 1em;
+    width: auto;
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+  @media screen and (min-width: 901px) {
+    #sticky {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: nowrap;
+      padding: 10px 32px;
+      gap: 24px;
+    }
+
+    #sticky_container {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-grow: 1;
+    }
+
+    .sticky_image-container {
+      height: 60px;
+    }
+
+    .sticky_image-container img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .sticky_product-title,
+    .sticky_variant-title,
+    .sticky_price {
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .sticky_price {
+      text-align: right;
+      flex-shrink: 0;
+      min-width: 80px;
+    }
+
+    #sticky button {
+      width: auto;
+      white-space: nowrap;
+      padding: 10px 18px;
+      flex-grow: 1;
+    }
+
+    #sticky button svg {
+      transform: translateY(-1px); /* fine-tune vertical alignment */
+    } 
+  }
+
+  @media screen and (max-width: 900px) {
+    #sticky button {
+      margin-top: 0.5em;
+    } 
+  }
+
+  {% if section.settings.stickyAtcEnableShaking %}
+    .btn-shake:enabled:hover {
+      animation: shakehover 1s cubic-bezier(.36,.07,.19,.97) both;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+    
+    .btn-shake:enabled {
+      animation: shake 6s cubic-bezier(.36,.07,.19,.97)  infinite;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+      
+    @keyframes shakehover {
+      10%, 90% {
+        transform: translate3d(-2px, 0, 0);
+      }
+      
+      20%, 80% {
+        transform: translate3d(4px, 0, 0);
+      }
+      
+      30%, 50%, 70% {
+        transform: translate3d(-5px, 0, 0);
+      }
+      
+      40%, 60% {
+        transform: translate3d(6px, 0, 0);
+      }
+    }
+    
+    @keyframes shake {
+      50%, 70% {
+        transform: translate3d(0, 0, 0);
+      }
+    
+      52%, 68% {
+        transform: translate3d(-2px, 0, 0);
+      }
+      
+      54%, 66% {
+        transform: translate3d(4px, 0, 0);
+      }
+      
+      56%, 60%, 64% {
+        transform: translate3d(-5px, 0, 0);
+      }
+      
+      58%, 62% {
+        transform: translate3d(6px, 0, 0);
+      }
+    }
+  {% endif %}
+</style>
+
+<script defer>
+  function initStickyAtc() {
+    const originalSelector = {{ section.settings.customAtcSelector | json }} ||'[name="add"]'; 
+    console.log(originalSelector);
+    const originalAtc = document.querySelector(originalSelector);
+    const sticky = document.getElementById('sticky');
+    if (!originalAtc || !sticky) return;
+
+    let visibleInitial = {{ section.settings.stickyAtcVisibleInitial | json }};
+    let disableOnDesktop = {{ section.settings.stickyAtcDisableDesktop | json }};
+
+    function isOutOfView(el) {
+      const rect = el.getBoundingClientRect();
+      return rect.bottom < 0 || rect.top > window.innerHeight;
+    }
+
+    function updateStickyVisibility() {
+      if (!originalAtc || !sticky) return;
+
+      const outOfView = isOutOfView(originalAtc);
+
+      // If not visible from beginning enable visibility once we first see the original ATC button
+      if (!visibleInitial && !outOfView) {
+        visibleInitial = true;
+      }
+
+      if (outOfView && visibleInitial) {
+        sticky.classList.remove('sticky_hidden');
+      } else {
+        sticky.classList.add('sticky_hidden');
+      }
+
+      if (disableOnDesktop && window.innerWidth > 600) {
+        sticky.style.display = "none";
+      } else {
+        sticky.style.display = "";
+      }
+    }
+
+    function bindStickyButtonClick() {
+      const stickyBtn = sticky.querySelector('button');
+      if (stickyBtn && originalAtc) {
+        stickyBtn.addEventListener('click', () => originalAtc.click());
+      }
+    }
+
+    function shortenProductTitle() {
+      const el = document.querySelector('.sticky_product-title');
+      const text = `{{ product.title | escape }}`;
+      const words = text.split(' ');
+      const short = words.slice(0, 3).join(' ') + (words.length > 3 ? '…' : '');
+      if (el) el.textContent = short;
+    }
+
+    // Initial bindings
+    updateStickyVisibility();
+    bindStickyButtonClick();
+    shortenProductTitle();
+
+    // Event bindings
+    ['scroll', 'resize', 'load'].forEach(evt => {
+      window.addEventListener(evt, updateStickyVisibility);
+    });
+  }
+
+  // Init on DOM ready
+  document.addEventListener('DOMContentLoaded', initStickyAtc);
+
+  // Shopify Editor support
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', initStickyAtc);
+  }
+
+  // React to variant changes (if DOM is replaced)
+  document.addEventListener('variant:change', function () {
+    setTimeout(() => {
+      fetch(window.location.href)
+        .then(res => res.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const newSticky = doc.querySelector('#sticky');
+          const sticky = document.getElementById('sticky');
+          if (sticky && newSticky) {
+            sticky.innerHTML = newSticky.innerHTML;
+            initStickyAtc(); // rebind everything
+          }
+        });
+    }, 200);
+  });
+</script>
+
+
+{% schema %}
+{
+  "name": "Sticky Button Standard",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "customAtcSelector",
+      "label": "Custom ATC Selector",
+    },
+    {
+      "type": "font_picker",
+      "id": "stickyFonttype",
+      "label": "Sticky Font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "fontsizeTitle",
+      "label": "Font Size Title in px",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },   
+    {
+      "type": "range",
+      "id": "fontsizeVariant",
+      "label": "Font Size Variant in px",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },   
+    {
+      "type": "range",
+      "id": "fontsizePrice",
+      "label": "Font Size Price in px",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "fontsizeButton",
+      "label": "Font Size Button in px",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "checkbox",
+      "id": "stickyAtcDisableDesktop",
+      "default": false,
+      "label": "Hide on Desktop?"
+    }, 
+    {
+      "type": "checkbox",
+      "id": "stickyAtcEnableShaking",
+      "default": true,
+      "label": "Enable Shaking?"
+    }, 
+    {
+      "type": "checkbox",
+      "id": "stickyAtcEnableImage",
+      "default": true,
+      "label": "Enable Image?"
+    },
+    {
+      "type": "checkbox",
+      "id": "stickyAtcVisibleInitial",
+      "default": true,
+      "label": "Visible before first scroll to ATC button?"
+    },
+    {
+      "type": "color",
+      "label": "BG Color Button",
+      "id": "stickyAtcBgColor",
+      "default": "#2e2e2e"
+    },
+    {
+      "type": "color",
+      "label": "Font Color Button",
+      "id": "stickyAtcColor",
+      "default": "#fdfbf6"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky Atc Standard",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

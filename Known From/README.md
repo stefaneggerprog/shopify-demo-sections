@@ -33,3 +33,4 @@ Display logos of well-known media, partners, or platforms to boost trust and soc
 ## 🔗 Live Demo
 
 [➡ View in Demo Store](https://testshopstefanegger.myshopify.com/products/known-from)
+PW: sdev

@@ -73,7 +73,7 @@ Designed to showcase products, categories, or editorial content in a fully visua
 ## 🔗 Live Demo
 
 [➡ View in Demo Store](https://testshopstefanegger.myshopify.com/products/image-collection)
-
+PW: sdev
 ---
 
 ## 🧑‍💻 Author
