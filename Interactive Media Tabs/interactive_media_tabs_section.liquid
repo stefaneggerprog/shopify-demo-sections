@@ -1,0 +1,426 @@
+<div class="video-image-selector__container section-height-{{ section.settings.height_large }}">
+  <div class="video-image-nav__container">
+    {% if section.settings.section_heading != blank %}
+      <h2 class="section-heading">{{ section.settings.section_heading }}</h2>
+    {% endif %}
+
+    <nav class="video-image-selector__menu" role="tablist" aria-label="Video Image Selector Menu">
+      {% for block in section.blocks %}
+        <div
+          class="video-image-selector__menu-button{% if forloop.first %} active{% endif %}"
+          role="tab"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-controls="panel-{{ block.id }}"
+          id="menu-{{ block.id }}"
+          data-index="{{ forloop.index0 }}"
+          tabindex="0"
+        >
+          {{ block.settings.nav_text }}
+        </div>
+      {% endfor %}
+    </nav>
+  </div>
+
+  <div class="video-image-content__container {% if section.settings.enable_shadow %}has-shadow{% endif %}">
+    {% for block in section.blocks %}
+      <div
+        id="panel-{{ block.id }}"
+        class="video-image-selector__panel{% if forloop.first %} active{% endif %}"
+        role="tabpanel"
+        aria-labelledby="menu-{{ block.id }}"
+        data-index="{{ forloop.index0 }}"
+      >
+        <div class="media-wrapper">
+          {% if block.settings.video_url != blank %}
+            <video
+              src="{{ block.settings.video_url }}"
+              muted
+              playsinline
+              preload="metadata"
+              class="video-image-selector__video"
+              tabindex="-1"
+            >
+              Your browser does not support the video tag.
+            </video>
+          {% elsif block.settings.image != blank %}
+            <img
+              src="{{ block.settings.image | img_url: 'master' }}"
+              alt="{{ block.settings.title | escape }}"
+              class="video-image-selector__image"
+              loading="lazy"
+            >
+          {% endif %}
+        </div>
+
+        <div class="video-image-selector__text">
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script defer>
+  function initVideoImageSection() {
+    const container = document.querySelector('#shopify-section-{{ section.id }} .video-image-selector__container');
+    if (!container) {
+      console.warn('Video Image Selector container not found!');
+      return;
+    }
+
+    const navButtons = container.querySelectorAll('.video-image-selector__menu-button');
+    const panels = container.querySelectorAll('.video-image-selector__panel');
+
+    if (navButtons.length === 0 || panels.length === 0) {
+      console.warn('No nav buttons or panels found');
+      return;
+    }
+
+    console.log('Video Image Selector initialized', navButtons.length, 'buttons,', panels.length, 'panels');
+
+    function activateTab(index) {
+      navButtons.forEach((btn, i) => {
+        const isActive = i === index;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      panels.forEach((panel, i) => {
+        const isActive = i === index;
+        if (isActive) {
+          panel.classList.add('active');
+          const video = panel.querySelector('video');
+          if (video) {
+            video.currentTime = 0;
+            // Get/Set Video Duration
+            const setDuration = () => {
+              const duration = video.duration || 0;
+              navButtons[index].style.setProperty('--auto-play-duration', `${duration}s`);
+              video.play().catch(() => {});
+            };
+            if (video.readyState >= 1) {
+              setDuration();
+            } else {
+              video.addEventListener('loadedmetadata', setDuration, { once: true });
+            }
+          } else {
+            navButtons[i].style.setProperty('--auto-play-duration', `0s`);
+          }
+        } else {
+          panel.classList.remove('active');
+          const video = panel.querySelector('video');
+          if (video) {
+            video.pause();
+            video.currentTime = 0;
+          }
+        }
+      });
+    }
+
+    navButtons.forEach((btn, i) => {
+      btn.addEventListener('click', () => activateTab(i));
+
+      //Accessability
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+    // Starte mit erstem Tab
+    activateTab(0);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initVideoImageSection();
+  });
+
+  // Shopify Theme Editor Support: re-init bei Änderung
+  document.addEventListener('shopify:section:load', function(event) {
+    if (event.target && event.target.id === 'shopify-section-{{ section.id }}') {
+      initVideoImageSection();
+    }
+  });
+</script>
+
+<style>
+  .video-image-selector__container {
+    display: flex;
+    padding: 5rem;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    min-height: 450px;
+  }
+
+  /* Navigation Container links */
+  .video-image-nav__container {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Menü */
+  .video-image-selector__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 450px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .video-image-selector__menu-button {
+    position: relative;
+    border-bottom: 2px solid #c3c6c8;
+    padding: 0.75em 1em;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+  .video-image-selector__menu-button:hover {
+    border-color: #c70093;
+    color: #c70093;
+  }
+
+  .video-image-selector__menu-button.active {
+    color: #c70093;
+    font-weight: 700;
+    border-bottom: none;
+  }
+
+  .video-image-selector__menu-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: #c700ff;
+    transform-origin: left;
+    transform: scaleX(0%);
+    display: block;
+    animation: hero-navigation-bar calc(var(--auto-play-duration)) linear forwards;
+  }
+
+  @keyframes hero-navigation-bar {
+    from {
+      transform: scaleX(0%);
+    }
+
+    to {
+      transform: scaleX(100%);
+    }
+  }
+
+  /* Content Container rechts */
+  .video-image-content__container {
+    width: 60%;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* Panels */
+  .video-image-selector__panel {
+    display: none;
+    position: relative;
+    background: #fff;
+    padding: 1rem;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .video-image-selector__panel.active {
+    display: flex;
+  }
+
+  .video-image-selector__panel .media-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Shadow bei aktivem Shadow-Setting */
+  .video-image-content__container.has-shadow {
+    box-shadow: 0 8px 24px rgba(199, 0, 147, 0.3);
+  }
+
+  /* Video und Bild */
+  .video-image-selector__video,
+  .video-image-selector__image {
+    max-width: 100%;
+    height: 100%;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Textblock */
+  .video-image-selector__text {
+    flex-grow: 1;
+    padding-top: 0.75rem;
+  }
+  .video-image-selector__text h3 {
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.25rem;
+    color: #2b1c1c;
+  }
+  .video-image-selector__text p {
+    margin: 0;
+    color: #444;
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 600px;
+  }
+
+  /* Responsive: Mobile Layout */
+  @media (max-width: 749px) {
+    .video-image-selector__container {
+      flex-direction: column;
+    }
+
+    .video-image-nav__container {
+      width: 100%;
+      padding-bottom: 1rem;
+    }
+
+    .video-image-content__container {
+      width: 100%;
+    }
+
+    .video-image-selector__menu {
+      flex-direction: row;
+      flex-wrap: wrap;
+      overflow-x: auto;
+      max-height: none;
+      border: none;
+      padding-right: 0;
+      position: static;
+      justify-content: space-around;
+    }
+    .video-image-selector__menu-button {
+      border-bottom: 2px solid #c3c6c8;
+      display: flex;
+      text-align: left;
+      width: fit-content;
+      position: relative;
+    }
+  }
+
+  /* Section height on large screens */
+  .section-height-small .video-image-content__container .video-image-selector__panel {
+    max-height: 300px;
+    overflow: hidden;
+  }
+  .section-height-medium .video-image-content__container .video-image-selector__panel {
+    max-height: 500px;
+    overflow: hidden;
+  }
+  .section-height-large .video-image-content__container .video-image-selector__panel {
+    max-height: 700px;
+    overflow: hidden;
+  }
+  .section-height-x-large .video-image-content__container .video-image-selector__panel {
+    max-height: 900px;
+    overflow: hidden;
+  }
+  .section-height-fullscreen {
+    height: 100vh;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Video Image Selector",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Section heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_shadow",
+      "label": "Enable shadow",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "height_large",
+      "label": "Section height on large screens",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "x-large", "label": "Extra large" },
+        { "value": "auto", "label": "Adapt to first image" },
+        { "value": "fullscreen", "label": "Fullscreen height" }
+      ],
+      "default": "medium"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "nav_text",
+          "label": "Menu Text",
+          "default": "Tab"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL (MP4)",
+          "info": "Overrides image if set"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Description text."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Video Image Selector",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,36 +1,64 @@
-# 📰 Known From Section (S-DEV)
+# 📰 Known From Section
 
-Display logos of well-known media, partners, or platforms to boost trust and social proof.
+Showcase logos of media, partners, or platforms to build trust.
+
+---
 
 ## ✨ Features
-
-- Fully customizable heading and subheading
-- Independent margin controls for headings and logo area
-- Adjustable image size (mobile & desktop)
+- Custom heading + subheading
+- Independent margin control
+- Adjustable logo sizes (desktop + mobile)
 - Optional sticky integration into previous section
-- Fully responsive and lightweight
+- Fully responsive + lightweight
 
-## ⚙️ Settings Overview
+---
 
-| Setting               | Description                                         		|
-|------------------------|--------------------------------------------------------------|
-| Heading / Subheading   | Text + individual margin offset                    		|
-| Image Size Desktop     | Logo width in px                                  		|
-| Image Size Mobile      | Logo width in px                                  		|
-| Gap Desktop / Mobile   | Space between logos                               		|
-| Background Color       | Section background                               		|
-| Text Color             | Heading/subheading color                         		|
-| Integration Checkbox   | Include the section into the one Above it (For Banners,..) 	|
+## ⚙️ Settings
 
-## 📱 Mobile View
+### Section Settings
+| Setting                  | Description                                        |
+|--------------------------|----------------------------------------------------|
+| `Heading / Subheading`    | Text + individual margin                           |
+| `Image Size Desktop`      | Logo width (px) desktop                            |
+| `Image Size Mobile`       | Logo width (px) mobile                             |
+| `Gap Desktop / Mobile`    | Space between logos                                |
+| `Background Color`        | Background color                                   |
+| `Text Color`              | Heading/subheading color                           |
+| `Integration Checkbox`    | Stick section to the one above (e.g. banner use)   |
 
+---
+
+📱 Responsive Behavior
+- Logos scale proportionally on mobile, tablet, and desktop to ensure clarity.
+- The logo grid adjusts spacing and alignment for different screen sizes.
+- Headings and subheadings resize automatically for readability on smaller devices.
+
+---
+
+🎯 Use Cases
+- Showcase press mentions and media features to build trust
+- Display partner or client logos on landing pages
+- Add social proof to product pages or about pages
+- Highlight certifications, awards, or affiliations
+- Use in homepage banners for brand credibility
+
+## 📱 Mobile View  
 ![Mobile Screenshot](KnownFrom_mobile.jpg)
 
-## 💻 Desktop View
-
+## 💻 Desktop View  
 ![Desktop Screenshot](KnownFrom_desktop.jpg)
 
-## 🔗 Live Demo
+---
 
-[➡ View in Demo Store](https://testshopstefanegger.myshopify.com/products/known-from)
+## 🔗 Live Demo  
+➡ [View Live Demo](https://testshopstefanegger.myshopify.com/products/known-from)  
 PW: sdev
+
+---
+
+## 🧑‍💻 Author
+
+Built by SDEV Solutions – Shopify Theme Development
+→ Clean Liquid, CSS, HTML, JS, and Theme Editor logic.
+Works with all Shopify 2.0-compatible themes.
+

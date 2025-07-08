@@ -33,6 +33,22 @@ A minimal, flexible “Add to Cart” sticky bar for Shopify product pages that 
 
 ---
 
+## 🎯 Use Cases
+- Increase mobile conversion rates
+- Keep ATC always accessible
+- Highlight promo products
+- Simplify checkout flow
+
+---
+
+📱 Responsive Behavior
+- The sticky bar adapts fluidly to mobile, tablet, and desktop viewports.
+- Button, text, and image sizes scale for readability and accessibility on smaller screens.
+- The bar can be disabled on desktop or mobile depending on configuration.
+- Motion effects (slide, shake) work consistently across devices.
+
+---
+
 ## 📱 Mobile View
 
 ![Mobile Screenshot](StickyAtcStandard_mobile.jpg)
@@ -43,13 +59,14 @@ A minimal, flexible “Add to Cart” sticky bar for Shopify product pages that 
 
 ---
 
-## 📐 Layout Logic
+## 📐 Additional Infos & Theme Compatibility
 
 - The sticky bar only appears **after** the original ATC button has been scrolled out of view.
 - The Visible initially? setting prevents sticky bar from showing until the main ATC has appeared at least once.
 - The sticky section listens for variant:change events and reloads its contents accordingly.
 - Works out of the box with most Dawn-based themes. Custom ATC Selector ensures broader compatibility.
 - Price & compare price are updated live on variant change.
+- Compatible with all themes, but ensure the main add-to-cart button uses `name="add"`. If not, change this selector via section settings
 
 ---
 
@@ -60,8 +77,9 @@ PW: sdev
 
 ---
 
-## 🧪 Theme Compatibility
+## 🧑‍💻 Author
 
-Compatible with all themes, but ensure the main add-to-cart button uses `name="add"`. If not, change this selector via section settings
-
+Built by SDEV Solutions – Shopify Theme Development
+→ Clean Liquid, CSS, HTML, JS, and Theme Editor logic.
+Works with all Shopify 2.0-compatible themes.
 

@@ -1,45 +1,42 @@
 # 🖼️ Shopify Image Collage Section
 
-A highly flexible, responsive image collage section for Shopify themes.  
-Designed to showcase products, categories, or editorial content in a fully visual, grid-based layout.
+A flexible, responsive image collage for Shopify themes.  
+Perfect for products, categories, or editorial content in a grid-based layout.
 
 ---
 
-## ✅ Features
-
-- Theme Editor configurable grid layout (columns/rows)
-- Independent configuration for desktop and mobile
+## ✨ Features
+- Theme Editor configurable grid (columns/rows)
+- Separate desktop and mobile grid settings
 - Optional image link, heading, subtext
-- Per-image control of width & height via grid span
-- Clean responsive layout using CSS Grid
-- Supports up to 50 blocks
-- Fully native – no app or JS required
+- Per-image grid span (width & height)
+- CSS Grid powered, fully responsive
+- Up to 50 blocks supported
+- 100% native (no app / no JS needed)
 
 ---
 
-## 🛠️ Settings
+## ⚙️ Settings
 
 ### Section Settings
-
-| Setting                     | Description                              |
-|-----------------------------|------------------------------------------|
-| `Section Heading`           | Optional section title                   |
-| `Desktop Columns`           | CSS value (e.g. `repeat(4, 1fr)`, `2fr 1fr`) |
-| `Desktop Rows`              | CSS value (e.g. `250px 250px`, `auto`)   |
-| `Mobile Columns`            | Mobile layout (e.g. `repeat(2, 1fr)`)    |
-| `Mobile Rows`               | e.g. `auto auto`, `150px 150px`          |
-| `Desktop Side Padding`      | e.g. `5%`, `40px`                        |
+| Setting                | Description                                    |
+|------------------------|------------------------------------------------|
+| `Section Heading`       | Optional section title                        |
+| `Desktop Columns`       | CSS grid columns (e.g. `repeat(4, 1fr)`)      |
+| `Desktop Rows`          | CSS grid rows (e.g. `250px 250px`, `auto`)    |
+| `Mobile Columns`        | Mobile grid columns (e.g. `repeat(2, 1fr)`)   |
+| `Mobile Rows`           | Mobile grid rows (e.g. `auto auto`)           |
+| `Desktop Side Padding`  | e.g. `5%`, `40px`                             |
 
 ### Block Settings
-
-| Setting                 | Description                                 |
-|-------------------------|---------------------------------------------|
-| `Image`                 | Image picker                                |
-| `Optional Link`         | Optional link for entire image              |
-| `Heading Text`          | Optional text shown over image              |
-| `Subtext`               | Optional smaller text below heading         |
-| `Columns to span`       | How many grid columns this image should span (width) |
-| `Rows to span`          | How many grid rows this image should span (height)   |
+| Setting                | Description                                   |
+|------------------------|-----------------------------------------------|
+| `Image`                 | Image picker                                 |
+| `Optional Link`          | Link for entire image                       |
+| `Heading Text`           | Overlay heading                             |
+| `Subtext`                | Overlay subtext                             |
+| `Columns to span`        | Number of grid columns to span (width)      |
+| `Rows to span`           | Number of grid rows to span (height)        |
 
 ---
 
@@ -60,24 +57,23 @@ Designed to showcase products, categories, or editorial content in a fully visua
 
 ---
 
-## 📱 Mobile
-
+## 📱 Mobile View  
 ![Mobile Screenshot](Fotokollektion_Mobile.jpg)
 
-## 💻 Desktop
-
+## 💻 Desktop View  
 ![Desktop Screenshot](Fotokollektion_Desktop.jpg)
 
 ---
 
-## 🔗 Live Demo
-
-[➡ View in Demo Store](https://testshopstefanegger.myshopify.com/products/image-collection)
+## 🔗 Live Demo  
+➡ [View Live Demo](https://testshopstefanegger.myshopify.com/products/image-collection)  
 PW: sdev
+
 ---
 
 ## 🧑‍💻 Author
 
 Built by SDEV Solutions – Shopify Theme Development
-→ Clean Liquid, CSS Grid, and Theme Editor logic.  
-Ready for use in any 2.0-compatible theme.
+→ Clean Liquid, CSS, HTML, JS, and Theme Editor logic.
+Works with all Shopify 2.0-compatible themes.
+
