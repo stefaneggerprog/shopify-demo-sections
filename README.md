@@ -40,6 +40,7 @@ For developers: It is recommended to move styles and scripts into separate files
 
 💡 Each section provides its own schema and flexible settings: colors, text sizes, images, layout controls, behavior toggles, and more.
 💡 For best maintainability, it is recommended to place any custom JavaScript or CSS in separate .js or .css files within your theme’s assets/ directory, and link or import them in your section code as needed. Avoid inline styles or scripts unless absolutely necessary.
+
 ---
 
 ### 📄 Requirements

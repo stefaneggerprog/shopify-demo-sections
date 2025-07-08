@@ -56,15 +56,15 @@ Ideal for storytelling, product highlights, or educational content.
 ---
 
 ## 📱 Mobile View  
-*Add screenshot here if available*
+![Mobile Screenshot](InteractiveMediaTabs_mobile.jpg)
 
 ## 💻 Desktop View  
-*Add screenshot here if available*
+![Desktop Screenshot](InteractiveMediaTabs_desktop.jpg)
 
 ---
 
 ## 🔗 Live Demo  
-➡ [View Live Demo](https://testshopstefanegger.myshopify.com/products/media-showcase-tabs)  
+➡ [View Live Demo](https://testshopstefanegger.myshopify.com/products/interactive-media-tabs)  
 PW: sdev
 
 ---
