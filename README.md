@@ -1,7 +1,9 @@
 ## 🧹 Shopify Custom Sections by S-DEV
 
-This repository contains a collection of custom Shopify sections designed for flexible use within the Shopify Theme Editor.  
+This repository contains a collection of custom Shopify sections designed for flexible use within the Shopify Theme Editor. It was created as part of my **Storetasker developer application**.
+
 All sections are built for **Online Store 2.0** themes and follow best practices for performance, accessibility, responsiveness, and maintainability.
+
 👉 Note: These sections include inline CSS and JS (where needed) to ensure they work out-of-the-box — no additional files or setup required.
 For developers: It is recommended to move styles and scripts into separate files (assets/) for easier maintenance and performance optimization.
 
@@ -24,7 +26,7 @@ For developers: It is recommended to move styles and scripts into separate files
 |----------------------------|-----------------------------------------------------------|
 | **Image Collage**           | Grid-based image layout with flexible row/column settings |
 | **Known From / Logo Row**   | Brand logos for social proof and trust                    |
-| **Media Showcase Tabs**     | Tabbed media viewer for videos, images, and text          |
+| **Interactive Media Tabs**  | Tabbed media viewer for videos, images, and text          |
 | **Sticky ATC Button**       | Sticky add-to-cart bar when native button is out of view  |
 
 > More modules will be added in future.
@@ -54,6 +56,9 @@ For developers: It is recommended to move styles and scripts into separate files
 
 **S-DEV** – [GitHub: stefaneggerprog](https://github.com/stefaneggerprog)  
 Frontend-focused Shopify developer creating performant custom UX solutions.
+
+If you're a merchant or agency looking for custom Shopify section development:  
+**Stefan Egger** – [stefaneggerprog@outlook.de](mailto:stefaneggerprog@outlook.de)
 
 ---
 
